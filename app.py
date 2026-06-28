@@ -23,7 +23,7 @@ if uploaded_file:
                 df[col] = df[col].fillna(df[col].median())
             else:
                 df[col] = df[col].fillna("Unknown")
-
+                
     st.subheader("Cleaned Data")
     st.write(f"Shape: {df.shape}")
     st.dataframe(df.head())
