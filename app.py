@@ -1,42 +1,5 @@
 import pandas as pd
 import streamlit as st
-
-st.title("Data Cleaner")
-df = pd.read_csv('online_retail.csv')
-
-st.write("Original Data:", df.head())
-st.write("Original Shape:", df.shape)
-
-df.columns = df.columns.str.strip().str.lower()
-df = df.drop_duplicates()
-
-df['invoicedate'] = pd.to_datetime(df['invoicedate'], errors='coerce')
-df['description'] = df['description'].fillna('No Description')
-
-if 'customerid' in df.columns:
-    df['customerid'] = df['customerid'].fillna(-1)
-    
-df = df[df['quantity'] > 0]
-
-if 'unitprice' in df.columns:
-    df = df[df['unitprice'] > 0]
-    
-df = df[~df['invoiceno'].astype(str).str.startswith('C')]
-
-df['description'] = df['description'].str.strip().str.upper()
-df['stockcode'] = df['stockcode'].astype(str).str.strip().str.upper()
-df = df[df['stockcode'].str.isalnum()]
-
-st.write("Cleaned Data:", df.head())
-st.write("Cleaned Shape:", df.shape)
-st.write("Null values:", df.isnull().sum())
-
-df.to_csv('cleaned_retail_data.csv', index=False)
-st.success("Done! cleaned_retail_data.csv ban gaya")
-
-
-import pandas as pd
-import streamlit as st
 import plotly.express as px
 import numpy as np
 
